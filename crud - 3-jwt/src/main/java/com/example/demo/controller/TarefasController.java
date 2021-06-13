@@ -30,9 +30,10 @@ public class TarefasController {
 		return tarefasService.pegarTodasTarefas();
 	}
 	
-	@PostMapping("/adicionar")
-	public Tarefas adicionartarefa(@RequestBody Tarefas tarefa) throws Exception {
-		return tarefasService.adicionarTarefa(tarefa);
+	@PostMapping("/adicionar/{id}")
+	public Tarefas adicionartarefa(@RequestBody Tarefas tarefa, @PathVariable(value = "id") Long id) throws Exception {
+		tarefasService.adicionarTarefa(tarefa, id);
+		return tarefa;
 	}
 	
 	@GetMapping("/{pegarTarefaPelotitulo}")

@@ -6,14 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.models.Tarefas;
-import com.example.demo.models.Usuario;
 import com.example.demo.repository.TarefasRepository;
+import com.example.demo.repository.impl.TarefaImpl;
+import com.example.demo.repository.impl.TarefasDao;
 
 @Service
 public class TarefasService {
 
 	@Autowired
 	private TarefasRepository tarefasRepository;
+	
+	@Autowired
+	private TarefasDao tarefaDao;
 	
 	@Autowired
 	private UserAuthenticationService userAuthenticationService;
@@ -29,15 +33,16 @@ public class TarefasService {
 		return tarefa;
 	}
 	
-	public Tarefas adicionarTarefa(Tarefas tarefa) throws Exception {
+
+	public void adicionarTarefa(Tarefas tarefa, Long id) throws Exception{
 		
-		if(tarefa.getTituloTarefa() != null && tarefa.getNomeTarefa() != null) {
-			return tarefasRepository.save(tarefa);
-		}else {
-			throw new Exception("Titulo ou Nome da Tarefa estão vazios");
+		if(tarefa.getTituloTarefa() != null && tarefa.getNomeTarefa() != null){
+			tarefaDao.insert(tarefa, id);
+		} else {
+			throw new Exception("Titulo ou Nome da Tarefa estão");
 		}
 	}
-
+	
 	public Tarefas atualizar(Tarefas tarefa) throws Exception{
 		return tarefasRepository.save(tarefa);
 	}
